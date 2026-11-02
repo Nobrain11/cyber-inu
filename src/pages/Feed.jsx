@@ -71,10 +71,7 @@ export default function Feed({ holders, mentions, countdown }) {
           {mentionList.slice(0, 4).map((m) => (
             <div key={m.id} className="post-card" style={{ marginBottom: '0.75rem' }}>
               <div className="post-header">
-                <div
-                  className="post-avatar"
-                  style={{ background: '#3ee8ff' }}
-                >
+                <div className="post-avatar" style={{ background: '#3ee8ff' }}>
                   {(m.name || m.handle || '?')[0].toUpperCase()}
                 </div>
                 <div className="post-meta">
@@ -85,9 +82,7 @@ export default function Feed({ holders, mentions, countdown }) {
               <p className="post-text">{m.text}</p>
               <a
                 className="btn btn-cyan"
-                href={`https://twitter.com/intent/tweet?in_reply_to=${m.id}&text=${encodeURIComponent(
-                  'Pack up. $CYBERINU'
-                )}`}
+                href={`https://twitter.com/intent/tweet?in_reply_to=${m.id}&text=${encodeURIComponent('Pack up. $CYBERINU')}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ fontSize: '0.85rem', minHeight: 36 }}
@@ -109,10 +104,7 @@ export default function Feed({ holders, mentions, countdown }) {
           <div className="pack-strip">
             {PACK.map((p) => (
               <div key={p.id} className="pack-card">
-                <div
-                  className="avatar"
-                  style={{ background: p.colors.primary }}
-                >
+                <div className="avatar" style={{ background: p.colors.primary }}>
                   {initials(p.name)}
                 </div>
                 <div className="name">{p.name}</div>
@@ -162,10 +154,7 @@ export default function Feed({ holders, mentions, countdown }) {
             return (
               <article key={post.id} className="post-card">
                 <div className="post-header">
-                  <div
-                    className="post-avatar"
-                    style={{ background: author.colors.primary }}
-                  >
+                  <div className="post-avatar" style={{ background: author.colors.primary }}>
                     {initials(author.name)}
                   </div>
                   <div className="post-meta">
@@ -200,39 +189,25 @@ export default function Feed({ holders, mentions, countdown }) {
           <div className="panel">
             <h3>Countdown</h3>
             <div className="countdown">{countdown || '—'}</div>
-            <p className="muted" style={{ margin: '0.35rem 0 0' }}>
-              Next pack pulse
-            </p>
+            <p className="muted" style={{ margin: '0.35rem 0 0' }}>Next pack pulse</p>
           </div>
           <div className="panel">
             <h3>Dogs online</h3>
             <p style={{ margin: 0, fontFamily: 'var(--font-head)', fontSize: '1.25rem', color: 'var(--cyan)' }}>
               {12 + (joinedList.length || 0) * 3}
             </p>
-            <p className="muted" style={{ margin: '0.25rem 0 0' }}>
-              Estimated pack activity
-            </p>
+            <p className="muted" style={{ margin: '0.25rem 0 0' }}>Estimated pack activity</p>
           </div>
           <div className="panel">
             <h3>Links</h3>
             <p style={{ margin: '0.25rem 0' }}>
-              <a href={BRAND.xUrl} target="_blank" rel="noopener noreferrer">
-                Official X
-              </a>
+              <a href={BRAND.xUrl} target="_blank" rel="noopener noreferrer">Official X</a>
             </p>
             <p style={{ margin: '0.25rem 0' }}>
-              <a href={BRAND.pumpUrl} target="_blank" rel="noopener noreferrer">
-                pump.fun
-              </a>
+              <a href={BRAND.pumpUrl} target="_blank" rel="noopener noreferrer">pump.fun</a>
             </p>
             <p style={{ margin: '0.25rem 0' }}>
-              <a
-                href={`https://solscan.io/token/${BRAND.ca}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Solscan
-              </a>
+              <a href={`https://solscan.io/token/${BRAND.ca}`} target="_blank" rel="noopener noreferrer">Solscan</a>
             </p>
           </div>
         </aside>
