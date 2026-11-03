@@ -69,7 +69,7 @@ export default function App() {
       />
       <main className="app-shell">
         {route === 'feed' && (
-          <Feed holders={holders} mentions={mentions} countdown={countdown} />
+          <Feed holders={holders} mentions={mentions} countdown={countdown} navigate={navigate} />
         )}
         {route === 'raid' && <Raid />}
         {route === 'pack' && <Pack />}
