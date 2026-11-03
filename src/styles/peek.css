@@ -1,0 +1,24 @@
+/* Peekhole-style mobile chrome */
+.top-chrome{position:sticky;top:0;z-index:60;background:rgba(8,5,20,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(62,232,255,.1);padding:.55rem .85rem 0}
+.chrome-row{max-width:1280px;margin:0 auto;display:flex;align-items:center;gap:.5rem}
+.brand-row{justify-content:space-between;padding-bottom:.55rem}
+.brand-actions{display:flex;align-items:center;gap:.4rem;flex-shrink:0}
+.pill-countdown{background:rgba(255,122,47,.2);border:1px solid rgba(255,122,47,.45);color:var(--orange);font-family:var(--font-head);font-weight:700;font-size:.78rem;letter-spacing:.04em;padding:.4rem .75rem;border-radius:999px;white-space:nowrap}
+.pill-cta{background:var(--cyan);color:#0a0618;font-family:var(--font-head);font-weight:700;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;padding:.4rem .9rem;border-radius:999px;white-space:nowrap;box-shadow:0 0 16px rgba(62,232,255,.35)}
+.pill-cta:hover{background:#6ef0ff;text-decoration:none}
+.stats-row{gap:.4rem;overflow-x:auto;padding-bottom:.55rem;scrollbar-width:none}
+.stats-row::-webkit-scrollbar{display:none}
+.stat-chip{display:inline-flex;align-items:center;gap:.35rem;background:rgba(255,255,255,.05);border:1px solid rgba(62,232,255,.16);border-radius:999px;padding:.4rem .75rem;font-size:.78rem;white-space:nowrap;flex-shrink:0;color:var(--text);cursor:default}
+button.stat-chip{cursor:pointer;font-family:inherit;border:1px solid rgba(62,232,255,.16)}
+.stat-chip.ca{border-color:rgba(62,232,255,.4);background:rgba(62,232,255,.1)}
+.stat-chip .k{color:var(--muted);font-size:.62rem;text-transform:uppercase;letter-spacing:.06em;font-weight:700}
+.stat-chip .v{font-family:var(--font-head);font-weight:600;color:var(--cyan);font-size:.82rem}
+.stat-chip .v.pos{color:#34d399}
+.stat-chip .v.neg{color:#f87171}
+.community-banner{display:flex;align-items:center;gap:.85rem;background:linear-gradient(135deg,rgba(62,232,255,.12),rgba(255,122,47,.08));border:1px solid rgba(62,232,255,.35);border-radius:16px;padding:.9rem 1rem;text-decoration:none;color:inherit;margin-bottom:.75rem}
+.community-banner:hover{border-color:var(--cyan);box-shadow:0 0 24px rgba(62,232,255,.15);text-decoration:none}
+.community-banner .icon{width:40px;height:40px;border-radius:50%;background:#1da1f2;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;color:#fff;font-size:1.1rem}
+.community-banner .title{font-family:var(--font-head);font-weight:700;font-size:.95rem;letter-spacing:.03em;text-transform:uppercase;color:var(--text)}
+.community-banner .sub{font-size:.8rem;color:var(--muted);margin-top:.1rem}
+.lore-card .section-title{font-size:1.35rem;text-transform:uppercase;letter-spacing:.02em}
+.brand-name{font-size:1.2rem}
