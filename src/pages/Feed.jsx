@@ -52,6 +52,14 @@ export default function Feed({ holders, mentions, countdown, navigate }) {
         </div>
       )}
 
+      <a className={'community-banner'} href={BRAND.xUrl} target={'_blank'} rel={'noopener noreferrer'}>
+        <div className={'icon'}>X</div>
+        <div>
+          <div className={'title'}>Join the Cyber Inu pack on X</div>
+          <div className={'sub'}>Raids, signals, and lore with the pack.</div>
+        </div>
+      </a>
+
       <div className={'layout-3'}>
         <aside className={'col-side'}>
           <div className={'glass'}>
@@ -85,8 +93,8 @@ export default function Feed({ holders, mentions, countdown, navigate }) {
 
         <main className={'col-main'}>
           <div className={'lore-card'}>
-            <div className={'section-label'}>The lore</div>
-            <h2 className={'section-title'}>Wait, what is Cyber Inu?</h2>
+            <div className={'section-label'}>Cyber Inu · the pack that refused to log off</div>
+            <h2 className={'section-title'}>WAIT, WHAT IS CYBER INU?</h2>
             <p style={{ margin: 0, color: 'var(--muted)', lineHeight: 1.55 }}>
               Half-robot Shiba. Full neon prophecy. $CYBERINU is the pack that refused to log off.
               Community-owned. Raid-ready. Not financial advice. Just the signal.
