@@ -31,13 +31,24 @@ export default function Feed({ holders, mentions, countdown, navigate }) {
 
   const holderList = holders?.top?.length ? holders.top : SAMPLE_HOLDERS;
   const mentionList = Array.isArray(mentions) && mentions.length ? mentions : SAMPLE_MENTIONS;
-  const apiNotice = holders && mentions && (!holders.fromApi || !mentions.fromApi);
+  const holdersLive = holders?.fromApi;
+  const mentionsLive = mentions?.fromApi;
+  let noticeText = null;
+  if (holders && mentions) {
+    if (!holdersLive && !mentionsLive) {
+      noticeText = 'Showing sample data. Connect Helius / X API keys for live holders and mentions.';
+    } else if (!mentionsLive) {
+      noticeText = 'Holders are live. Connect X_BEARER_TOKEN for live mentions.';
+    } else if (!holdersLive) {
+      noticeText = 'Mentions are live. Connect HELIUS_API_KEY for live holders.';
+    }
+  }
 
   return (
     <div className={'page'}>
-      {apiNotice && (
+      {noticeText && (
         <div className={'notice'}>
-          Showing sample data. Connect Helius / X API keys on the server for live holders and mentions.
+          {noticeText}
         </div>
       )}
 
@@ -97,98 +108,116 @@ export default function Feed({ holders, mentions, countdown, navigate }) {
             <div className={'section-label'}>Suggested</div>
             <h2 className={'section-title'}>The pack</h2>
             <div className={'pack-grid-peek'}>
-              {PACK.slice(0, 6).map((p) => (
-                <div className={'pack-model'} key={p.id}>
+              {PACK.map((p) => (
+                <div key={p.id} className={'pack-model'}>
                   <div className={'cover'}>
-                    <div
-                      className={'cover-avatar'}
-                      style={{ background: 'linear-gradient(135deg, ' + (p.colors?.primary || '#3ee8ff') + ', ' + (p.colors?.secondary || '#ff7a2f') + ')' }}
-                    >
+                    <div className={'cover-avatar'} style={{ background: p.colors.primary }}>
                       {initials(p.name)}
                     </div>
                   </div>
                   <div className={'body'}>
-                    <div className={'name'}>{p.name} <span className={'badge-open'}>Open</span></div>
+                    <div className={'name'}>
+                      {p.name}
+                      <span className={'badge-open'}>Open</span>
+                    </div>
                     <div className={'handle'}>{p.handle}</div>
-                    <button type={'button'} className={'toggle ' + (isJoined(p.id) ? 'on' : '')} onClick={() => toggle(p.id)} style={{ width: '100%' }}>
+                    <button
+                      type={'button'}
+                      className={'btn btn-ghost'}
+                      style={{ width: '100%', minHeight: 32, fontSize: '0.75rem' }}
+                      onClick={() => toggle(p.id)}
+                    >
                       {isJoined(p.id) ? 'Joined' : 'Join pack'}
                     </button>
                   </div>
                 </div>
               ))}
             </div>
-            <button type={'button'} className={'btn btn-ghost'} style={{ width: '100%', marginTop: '0.75rem' }} onClick={() => navigate('#/pack')}>
+            <button
+              type={'button'}
+              className={'btn btn-ghost'}
+              style={{ width: '100%', marginTop: '0.75rem' }}
+              onClick={() => navigate('#/pack')}
+            >
               View full pack
             </button>
           </div>
 
-          <div>
-            <div className={'feed-filter'}>
-              <button type={'button'} className={'nav-pill ' + (filter === 'for-you' ? 'active' : '')} onClick={() => setFilter('for-you')}>For you</button>
-              <button type={'button'} className={'nav-pill ' + (filter === 'x' ? 'active' : '')} onClick={() => setFilter('x')}>Live from X</button>
-            </div>
+          <div className={'feed-filter'}>
+            <button type={'button'} className={'btn ' + (filter === 'for-you' ? 'btn-cyan' : 'btn-ghost')} onClick={() => setFilter('for-you')}>
+              For you
+            </button>
+            <button type={'button'} className={'btn ' + (filter === 'following' ? 'btn-cyan' : 'btn-ghost')} onClick={() => setFilter('following')}>
+              Following{joinedList.length ? ` (${joinedList.length})` : ''}
+            </button>
+          </div>
 
-            {filter === 'for-you' && FEED_POSTS.map((post) => {
-              const author = packMember(post.authorId);
-              return (
-                <article className={'post-card'} key={post.id}>
-                  <div className={'post-header'}>
-                    <div className={'post-avatar'} style={{ background: avatarColor(post.authorId) }}>{initials(author.name)}</div>
-                    <div className={'post-meta'}>
-                      <div className={'name'}>{author.name}</div>
-                      <div className={'handle'}>{author.handle}</div>
-                    </div>
-                  </div>
-                  <p className={'post-text'}>{post.text}</p>
-                  {post.skyline && <Skyline seed={post.id} className={'skyline'} />}
-                  <div className={'post-actions'}>
-                    <button type={'button'} className={'action-btn ' + (likes[post.id] ? 'active' : '')} onClick={() => setLikes((s) => ({ ...s, [post.id]: !s[post.id] }))}>
-                      {likes[post.id] ? 'Liked' : 'Like'}
-                    </button>
-                    <button type={'button'} className={'action-btn ' + (boosts[post.id] ? 'boosted' : '')} onClick={() => setBoosts((s) => ({ ...s, [post.id]: !s[post.id] }))}>
-                      {boosts[post.id] ? 'Boosted' : 'Boost'}
-                    </button>
-                    <button type={'button'} className={'action-btn'} onClick={() => navigate('#/raid')}>Raid this</button>
-                  </div>
-                </article>
-              );
-            })}
-
-            {filter === 'x' && mentionList.map((m, i) => (
-              <article className={'post-card'} key={m.id || i}>
+          {(filter === 'following' ? FEED_POSTS.filter((post) => isJoined(post.authorId)) : FEED_POSTS).map((post) => {
+            const author = packMember(post.authorId);
+            return (
+              <article key={post.id} className={'post-card'}>
                 <div className={'post-header'}>
-                  <div className={'post-avatar'} style={{ background: 'linear-gradient(135deg,#3ee8ff,#ff7a2f)' }}>{((m.name || m.author || 'X')[0] || 'X').toUpperCase()}</div>
+                  <div className={'post-avatar'} style={{ background: avatarColor(post.authorId) }}>
+                    {initials(author.name)}
+                  </div>
                   <div className={'post-meta'}>
-                    <div className={'name'}>{m.name || m.author || 'Anon'}</div>
-                    <div className={'handle'}>@{m.handle || 'unknown'}</div>
+                    <div className={'name'}>{author.name}</div>
+                    <div className={'handle'}>{author.handle}</div>
                   </div>
                 </div>
-                <p className={'post-text'}>{m.text}</p>
+                <p className={'post-text'}>{post.text}</p>
+                {post.skyline && <Skyline seed={post.id} />}
                 <div className={'post-actions'}>
-                  <button type={'button'} className={'action-btn'} onClick={() => navigate('#/raid')}>Raid this post</button>
+                  <button
+                    type={'button'}
+                    className={'action-btn ' + (likes[post.id] ? 'active' : '')}
+                    onClick={() => setLikes((s) => ({ ...s, [post.id]: !s[post.id] }))}
+                  >
+                    {likes[post.id] ? 'Liked' : 'Like'} {post.likes + (likes[post.id] ? 1 : 0)}
+                  </button>
+                  <button
+                    type={'button'}
+                    className={'action-btn ' + (boosts[post.id] || post.boosted ? 'boosted' : '')}
+                    onClick={() => setBoosts((s) => ({ ...s, [post.id]: !s[post.id] }))}
+                  >
+                    Boost
+                  </button>
+                  <button type={'button'} className={'action-btn'} onClick={() => navigate('#/raid')}>
+                    Raid
+                  </button>
                 </div>
               </article>
-            ))}
-          </div>
+            );
+          })}
+
+          {filter === 'following' && !joinedList.length && (
+            <p className={'muted'}>Join pack members on The Pack tab to fill Following.</p>
+          )}
         </main>
 
         <aside className={'col-side'}>
           <div className={'glass'}>
             <div className={'section-label'}>Countdown</div>
-            <div className={'countdown-big'}>{countdown || '-'}</div>
-            <p className={'muted'} style={{ margin: '0.35rem 0 0' }}>Next pack pulse</p>
+            <div className={'countdown-big'}>{countdown || '--:--'}</div>
+            <div className={'muted'}>Next pack pulse</div>
           </div>
           <div className={'glass'}>
             <div className={'section-label'}>Dogs online</div>
-            <div className={'countdown-big'} style={{ fontSize: '1.4rem' }}>{joinedList.length || 12}</div>
-            <p className={'muted'} style={{ margin: '0.35rem 0 0' }}>Estimated pack activity</p>
+            <div style={{ fontFamily: 'var(--font-head)', fontSize: '1.5rem', fontWeight: 700 }}>
+              {12 + (joinedList.length || 0)}
+            </div>
+            <div className={'muted'}>Estimated pack activity</div>
           </div>
           <div className={'glass'}>
             <div className={'section-label'}>Official feed</div>
             <h2 className={'section-title'}>Cyber Inu on X</h2>
-            <a className={'btn btn-cyan'} style={{ width: '100%' }} href={BRAND.xUrl} target={'_blank'} rel={'noopener noreferrer'}>Open X</a>
-            <div style={{ marginTop: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+            <a className={'btn btn-cyan'} style={{ width: '100%', marginBottom: '0.5rem' }} href={BRAND.xUrl} target={'_blank'} rel={'noopener noreferrer'}>
+              Open X
+            </a>
+            <div>
               <a href={BRAND.pumpUrl} target={'_blank'} rel={'noopener noreferrer'}>pump.fun</a>
+            </div>
+            <div>
               <a href={'https://solscan.io/token/' + BRAND.ca} target={'_blank'} rel={'noopener noreferrer'}>Solscan</a>
             </div>
           </div>
