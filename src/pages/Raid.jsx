@@ -58,42 +58,43 @@ export default function Raid() {
   };
 
   return (
-    <div className="page">
-      <h2>Raid generator</h2>
-      <p className="muted" style={{ marginBottom: '1rem' }}>
+    <div className={'page'}>
+      <div className={'section-label'}>Marketing</div>
+      <h2 className={'section-title'} style={{ fontSize: '1.4rem' }}>Raid generator</h2>
+      <p className={'muted'} style={{ marginBottom: '1rem', marginTop: '-0.25rem' }}>
         Pick a template, edit, then copy or open on X. Optional: paste a post URL to reply.
       </p>
 
-      {notice && <div className="notice">{notice}</div>}
+      {notice && <div className={'notice'}>{notice}</div>}
 
-      <div className="panel raid-form">
-        <label className="muted" style={{ display: 'block', marginBottom: '0.35rem' }}>
+      <div className={'panel raid-form'}>
+        <label className={'muted'} style={{ display: 'block', marginBottom: '0.35rem' }}>
           Optional post URL
         </label>
         <input
-          type="url"
-          placeholder="https://x.com/user/status/123…"
+          type={'url'}
+          placeholder={'https://x.com/user/status/123...'}
           value={postUrl}
           onChange={(e) => setPostUrl(e.target.value)}
         />
 
-        <label className="muted" style={{ display: 'block', marginBottom: '0.35rem' }}>
+        <label className={'muted'} style={{ display: 'block', marginBottom: '0.35rem' }}>
           Templates
         </label>
-        <div className="template-list">
+        <div className={'template-list'}>
           {RAID_TEMPLATES.map((t, i) => (
             <button
               key={i}
-              type="button"
-              className="template-chip"
+              type={'button'}
+              className={'template-chip'}
               onClick={() => setText(t)}
             >
-              {t.slice(0, 60)}…
+              {t.slice(0, 60)}...
             </button>
           ))}
         </div>
 
-        <label className="muted" style={{ display: 'block', marginBottom: '0.35rem' }}>
+        <label className={'muted'} style={{ display: 'block', marginBottom: '0.35rem' }}>
           Message
         </label>
         <textarea
@@ -101,27 +102,27 @@ export default function Raid() {
           onChange={(e) => setText(e.target.value.slice(0, 280))}
           maxLength={280}
         />
-        <p className="muted" style={{ margin: '0 0 0.75rem' }}>
+        <p className={'muted'} style={{ margin: '0 0 0.75rem' }}>
           {text.length}/280
         </p>
 
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-          <button type="button" className="btn btn-ghost" onClick={shuffle}>
+          <button type={'button'} className={'btn btn-ghost'} onClick={shuffle}>
             Shuffle
           </button>
-          <button type="button" className="btn btn-ghost" onClick={copy}>
+          <button type={'button'} className={'btn btn-ghost'} onClick={copy}>
             Copy
           </button>
-          <button type="button" className="btn btn-primary" onClick={openOnX}>
+          <button type={'button'} className={'btn btn-primary'} onClick={openOnX}>
             Open on X
           </button>
           <button
-            type="button"
-            className="btn btn-cyan"
+            type={'button'}
+            className={'btn btn-cyan'}
             onClick={writeWithGrok}
             disabled={loading}
           >
-            {loading ? 'Writing…' : 'Write with Grok'}
+            {loading ? 'Writing...' : 'Write with Grok'}
           </button>
         </div>
       </div>

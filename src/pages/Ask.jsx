@@ -42,15 +42,15 @@ export default function Ask() {
             role: 'assistant',
             content:
               data.error === 'missing_key'
-                ? "Grok link is offline. Pack still here offline. Try again later or ask the community on X."
-                : data.error || 'Signal lost. Try again.',
+                ? 'Grok key offline. Pack still online though — try the lore on Feed or a raid template.'
+                : 'Signal dropped. Try again in a moment.',
           },
         ]);
       }
     } catch {
       setMessages((prev) => [
         ...prev,
-        { role: 'assistant', content: 'Connection glitch. The network is noisy — try again.' },
+        { role: 'assistant', content: 'Connection noise. Visor still glowing — retry the signal.' },
       ]);
     } finally {
       setLoading(false);
@@ -58,35 +58,33 @@ export default function Ask() {
   };
 
   return (
-    <div className="page">
-      <h2>Ask Inu</h2>
-      <p className="muted" style={{ marginBottom: '1rem' }}>
+    <div className={'page'}>
+      <div className={'section-label'}>AI</div>
+      <h2 className={'section-title'} style={{ fontSize: '1.4rem' }}>Ask Inu</h2>
+      <p className={'muted'} style={{ marginBottom: '1rem', marginTop: '-0.25rem' }}>
         Chat with Cyber Inu. Replies stay in character. No financial advice.
       </p>
 
-      <div className="chat-wrap">
-        <div className="chat-messages">
+      <div className={'chat-wrap'}>
+        <div className={'chat-messages'}>
           {messages.map((m, i) => (
-            <div key={i} className={`msg ${m.role === 'user' ? 'user' : 'bot'}`}>
+            <div key={i} className={'msg ' + (m.role === 'user' ? 'user' : 'bot')}>
               {m.content}
             </div>
           ))}
-          {loading && (
-            <div className="msg bot muted">Processing signal…</div>
-          )}
+          {loading && <div className={'msg bot muted'}>Processing signal...</div>}
           <div ref={bottomRef} />
         </div>
-        <div className="chat-input-row">
+        <div className={'chat-input-row'}>
           <input
-            type="text"
-            placeholder="Ask the pack leader…"
+            type={'text'}
+            placeholder={'Ask the pack leader...'}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && send()}
-            maxLength={500}
             disabled={loading}
           />
-          <button type="button" className="btn btn-primary" onClick={send} disabled={loading}>
+          <button type={'button'} className={'btn btn-primary'} onClick={send} disabled={loading || !input.trim()}>
             Send
           </button>
         </div>
