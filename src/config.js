@@ -4,7 +4,7 @@ export const BRAND = {
   ca: '7u4JmWrWG41kYkKpyqbuYJR4uZhE7oLCUMCGfNkNCFWq',
   xUrl: 'https://x.com/OfficialCyInu',
   pumpUrl: 'https://pump.fun/coin/7u4JmWrWG41kYkKpyqbuYJR4uZhE7oLCUMCGfNkNCFWq',
-  logo: '/logo.jpg',
+  logo: '/logo.svg',
   tagline: "Good dogs don't follow the code. They rewrite it.",
   prophecy: 'AI → AGI → SI → CI',
   lore: 'A Shiba who refused to log off. Half flesh, half firmware. The pack that stays online.',
