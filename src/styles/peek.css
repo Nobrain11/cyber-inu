@@ -22,3 +22,13 @@ button.stat-chip{cursor:pointer;font-family:inherit;border:1px solid rgba(62,232
 .community-banner .sub{font-size:.8rem;color:var(--muted);margin-top:.1rem}
 .lore-card .section-title{font-size:1.35rem;text-transform:uppercase;letter-spacing:.02em}
 .brand-name{font-size:1.2rem}
+.top-row{display:none}
+.nav-pills{position:relative;z-index:1;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.nav-pill{position:relative;z-index:1;flex-shrink:0}
+.nav-pill.active{z-index:2}
+@media (max-width:959px){
+  .layout-3{display:flex;flex-direction:column}
+  .layout-3 .col-main{order:1}
+  .layout-3 .col-side:first-of-type{order:2}
+  .layout-3 .col-side:last-of-type{order:3}
+}
