@@ -22,58 +22,41 @@ export default function Header({ route, navigate, holdersCount, countdown }) {
     navigator.clipboard?.writeText(BRAND.ca).catch(() => {});
   };
 
+  const caShort = BRAND.ca.slice(0, 4) + '...' + BRAND.ca.slice(-4);
+
   return (
     <header className={'top-chrome'}>
-      <div className={'top-row'}>
+      <div className={'chrome-row brand-row'}>
         <div className={'brand-block'}>
-          <img src={BRAND.logo} alt={''} className={'brand-logo'} width={40} height={40} />
-          <div>
-            <div className={'brand-name'}>{BRAND.name}</div>
-            <div className={'brand-ticker'}>{BRAND.ticker}</div>
-          </div>
+          <img src={BRAND.logo} alt={''} className={'brand-logo'} width={36} height={36} />
+          <span className={'brand-name'}>{BRAND.name}</span>
         </div>
-
-        <div className={'stat-pills'}>
-          <div className={'stat-pill ca'}>
-            <span className={'label'}>CA</span>
-            <span className={'value ca-text'} title={BRAND.ca}>
-              {BRAND.ca.slice(0, 4)}...{BRAND.ca.slice(-4)}
-            </span>
-            <button type={'button'} className={'copy-btn'} onClick={copyCa} aria-label={'Copy contract address'}>
-              copy
-            </button>
-          </div>
-          <div className={'stat-pill'}>
-            <span className={'label'}>Mcap</span>
-            <span className={'value'}>{market.loading ? '...' : formatMcap(market.marketCap)}</span>
-          </div>
-          <div className={'stat-pill'}>
-            <span className={'label'}>Holders</span>
-            <span className={'value'}>{holdersCount != null ? holdersCount.toLocaleString() : '\u2014'}</span>
-          </div>
-          <div className={'stat-pill'}>
-            <span className={'label'}>24h</span>
-            <span
-              className={`value ${
-                market.priceChange24h > 0 ? 'pos' : market.priceChange24h < 0 ? 'neg' : ''
-              }`}
-            >
-              {market.loading ? '...' : formatChange(market.priceChange24h)}
-            </span>
-          </div>
+        <div className={'brand-actions'}>
+          <span className={'pill-countdown'}>{countdown || '\u2014'}</span>
+          <a className={'pill-cta'} href={BRAND.pumpUrl} target={'_blank'} rel={'noopener noreferrer'}>
+            Buy
+          </a>
         </div>
+      </div>
 
-        <div className={'top-actions'}>
-          <span className={'stat-pill'}>
-            <span className={'label'}>Next</span>
-            <span className={'value'}>{countdown || '\u2014'}</span>
+      <div className={'chrome-row stats-row'}>
+        <button type={'button'} className={'stat-chip ca'} onClick={copyCa} title={BRAND.ca}>
+          <span className={'k'}>CA</span>
+          <span className={'v'}>{caShort}</span>
+        </button>
+        <div className={'stat-chip'}>
+          <span className={'k'}>Mcap</span>
+          <span className={'v'}>{market.loading ? '...' : formatMcap(market.marketCap)}</span>
+        </div>
+        <div className={'stat-chip'}>
+          <span className={'k'}>Holders</span>
+          <span className={'v'}>{holdersCount != null ? holdersCount.toLocaleString() : '\u2014'}</span>
+        </div>
+        <div className={'stat-chip'}>
+          <span className={'k'}>24h</span>
+          <span className={'v ' + (market.priceChange24h > 0 ? 'pos' : market.priceChange24h < 0 ? 'neg' : '')}>
+            {market.loading ? '...' : formatChange(market.priceChange24h)}
           </span>
-          <a className={'btn btn-ghost'} href={BRAND.xUrl} target={'_blank'} rel={'noopener noreferrer'}>
-            X
-          </a>
-          <a className={'btn btn-primary'} href={BRAND.pumpUrl} target={'_blank'} rel={'noopener noreferrer'}>
-            Buy on pump.fun
-          </a>
         </div>
       </div>
 
@@ -82,7 +65,7 @@ export default function Header({ route, navigate, holdersCount, countdown }) {
           <button
             key={t.id}
             type={'button'}
-            className={`nav-pill ${route === t.id ? 'active' : ''}`}
+            className={'nav-pill ' + (route === t.id ? 'active' : '')}
             onClick={() => navigate(t.path)}
             aria-current={route === t.id ? 'page' : undefined}
           >
