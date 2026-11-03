@@ -2,7 +2,7 @@ import { BRAND, TABS } from '../config';
 import { useMarket } from '../hooks/useMarket';
 
 function formatMcap(n) {
-  if (n == null) return '—';
+  if (n == null) return '\u2014';
   if (n >= 1e9) return `$${(n / 1e9).toFixed(2)}B`;
   if (n >= 1e6) return `$${(n / 1e6).toFixed(2)}M`;
   if (n >= 1e3) return `$${(n / 1e3).toFixed(1)}K`;
@@ -10,7 +10,7 @@ function formatMcap(n) {
 }
 
 function formatChange(n) {
-  if (n == null) return '—';
+  if (n == null) return '\u2014';
   const sign = n >= 0 ? '+' : '';
   return `${sign}${n.toFixed(1)}%`;
 }
@@ -37,19 +37,19 @@ export default function Header({ route, navigate, holdersCount, countdown }) {
           <div className="stat-pill ca">
             <span className="label">CA</span>
             <span className="value ca-text" title={BRAND.ca}>
-              {BRAND.ca.slice(0, 4)}…{BRAND.ca.slice(-4)}
+              {BRAND.ca.slice(0, 4)}\u2026{BRAND.ca.slice(-4)}
             </span>
             <button type="button" className="copy-btn" onClick={copyCa} aria-label="Copy contract address">
-              ⎘
+              \u2398
             </button>
           </div>
           <div className="stat-pill">
             <span className="label">Mcap</span>
-            <span className="value">{market.loading ? '…' : formatMcap(market.marketCap)}</span>
+            <span className="value">{market.loading ? '\u2026' : formatMcap(market.marketCap)}</span>
           </div>
           <div className="stat-pill">
             <span className="label">Holders</span>
-            <span className="value">{holdersCount != null ? holdersCount.toLocaleString() : '—'}</span>
+            <span className="value">{holdersCount != null ? holdersCount.toLocaleString() : '\u2014'}</span>
           </div>
           <div className="stat-pill">
             <span className="label">24h</span>
@@ -58,7 +58,7 @@ export default function Header({ route, navigate, holdersCount, countdown }) {
                 market.priceChange24h > 0 ? 'pos' : market.priceChange24h < 0 ? 'neg' : ''
               }`}
             >
-              {market.loading ? '…' : formatChange(market.priceChange24h)}
+              {market.loading ? '\u2026' : formatChange(market.priceChange24h)}
             </span>
           </div>
         </div>
@@ -66,7 +66,7 @@ export default function Header({ route, navigate, holdersCount, countdown }) {
         <div className="top-actions">
           <span className="stat-pill">
             <span className="label">Next</span>
-            <span className="value">{countdown || '—'}</span>
+            <span className="value">{countdown || '\u2014'}</span>
           </span>
           <a className="btn btn-ghost" href={BRAND.xUrl} target="_blank" rel="noopener noreferrer">
             X
