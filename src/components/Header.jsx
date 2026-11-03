@@ -23,23 +23,35 @@ export default function Header({ route, navigate, holdersCount, countdown }) {
   };
 
   return (
-    <header className="site-header">
-      <div className="header-inner">
-        <div className="visor-pill" role="region" aria-label="Live stats">
-          <div className="stat">
+    <header className="top-chrome">
+      <div className="top-row">
+        <div className="brand-block">
+          <img src={BRAND.logo} alt="" className="brand-logo" width={40} height={40} />
+          <div>
+            <div className="brand-name">{BRAND.name}</div>
+            <div className="brand-ticker">{BRAND.ticker}</div>
+          </div>
+        </div>
+
+        <div className="stat-pills">
+          <div className="stat-pill ca">
             <span className="label">CA</span>
-            <span className="value ca" title={BRAND.ca}>
+            <span className="value ca-text" title={BRAND.ca}>
               {BRAND.ca.slice(0, 4)}…{BRAND.ca.slice(-4)}
             </span>
             <button type="button" className="copy-btn" onClick={copyCa} aria-label="Copy contract address">
               ⎘
             </button>
           </div>
-          <div className="stat">
+          <div className="stat-pill">
             <span className="label">Mcap</span>
             <span className="value">{market.loading ? '…' : formatMcap(market.marketCap)}</span>
           </div>
-          <div className="stat">
+          <div className="stat-pill">
+            <span className="label">Holders</span>
+            <span className="value">{holdersCount != null ? holdersCount.toLocaleString() : '—'}</span>
+          </div>
+          <div className="stat-pill">
             <span className="label">24h</span>
             <span
               className={`value ${
@@ -49,58 +61,35 @@ export default function Header({ route, navigate, holdersCount, countdown }) {
               {market.loading ? '…' : formatChange(market.priceChange24h)}
             </span>
           </div>
-          <div className="stat">
-            <span className="label">Holders</span>
-            <span className="value">{holdersCount != null ? holdersCount.toLocaleString() : '—'}</span>
-          </div>
-          <div className="stat">
+        </div>
+
+        <div className="top-actions">
+          <span className="stat-pill">
             <span className="label">Next</span>
             <span className="value">{countdown || '—'}</span>
-          </div>
+          </span>
+          <a className="btn btn-ghost" href={BRAND.xUrl} target="_blank" rel="noopener noreferrer">
+            X
+          </a>
+          <a className="btn btn-primary" href={BRAND.pumpUrl} target="_blank" rel="noopener noreferrer">
+            Buy on pump.fun
+          </a>
         </div>
-
-        <div className="header-brand">
-          <div className="brand-left">
-            <img src={BRAND.logo} alt="" className="brand-logo" width={44} height={44} />
-            <div>
-              <div className="brand-name">{BRAND.name}</div>
-              <div className="brand-ticker">{BRAND.ticker}</div>
-            </div>
-          </div>
-          <div className="header-actions">
-            <a
-              className="btn btn-ghost"
-              href={BRAND.xUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              X
-            </a>
-            <a
-              className="btn btn-primary"
-              href={BRAND.pumpUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Buy on pump.fun
-            </a>
-          </div>
-        </div>
-
-        <nav className="tabs" aria-label="Main">
-          {TABS.map((t) => (
-            <button
-              key={t.id}
-              type="button"
-              className={`tab ${route === t.id ? 'active' : ''}`}
-              onClick={() => navigate(t.path)}
-              aria-current={route === t.id ? 'page' : undefined}
-            >
-              {t.label}
-            </button>
-          ))}
-        </nav>
       </div>
+
+      <nav className="nav-pills" aria-label="Main">
+        {TABS.map((t) => (
+          <button
+            key={t.id}
+            type="button"
+            className={`nav-pill ${route === t.id ? 'active' : ''}`}
+            onClick={() => navigate(t.path)}
+            aria-current={route === t.id ? 'page' : undefined}
+          >
+            {t.label}
+          </button>
+        ))}
+      </nav>
     </header>
   );
 }
