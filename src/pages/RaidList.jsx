@@ -1,65 +1,53 @@
-import { SAMPLE_MENTIONS } from '../config';
+import { SAMPLE_MENTIONS, BRAND } from '../config';
 
 export default function RaidList({ mentions }) {
-  const list = mentions?.length ? mentions : SAMPLE_MENTIONS;
+  const list = Array.isArray(mentions) && mentions.length ? mentions : SAMPLE_MENTIONS;
   const fromApi = mentions?.fromApi;
 
   return (
-    <div className="page">
-      <h2>Raid list</h2>
-      <p className="muted" style={{ marginBottom: '1rem' }}>
-        Recent mentions. {fromApi ? 'Live from X.' : 'Sample data — configure X_BEARER_TOKEN for live mentions.'}
+    <div className={'page'}>
+      <div className={'section-label'}>Signals</div>
+      <h2 className={'section-title'} style={{ fontSize: '1.4rem' }}>Raid list</h2>
+      <p className={'muted'} style={{ marginBottom: '1rem', marginTop: '-0.25rem' }}>
+        {fromApi ? 'Live mentions from X.' : 'Pack signal board — open live search for realtime chatter.'}
       </p>
 
       {!fromApi && (
-        <div className="notice">
-          Connect an X API bearer token to load real mentions. Sample posts shown below.
-        </div>
+        <a
+          className={'community-banner'}
+          href={'https://x.com/search?q=%24CYBERINU&src=typed_query&f=live'}
+          target={'_blank'}
+          rel={'noopener noreferrer'}
+        >
+          <div className={'icon search-icon'}>S</div>
+          <div>
+            <div className={'title'}>Open live $CYBERINU search</div>
+            <div className={'sub'}>See what the timeline is saying right now.</div>
+          </div>
+        </a>
       )}
 
-      {list.map((m) => (
-        <div key={m.id} className="post-card">
-          <div className="post-header">
-            <div className="post-avatar" style={{ background: '#3ee8ff' }}>
-              {(m.name || m.handle || '?')[0].toUpperCase()}
-            </div>
-            <div className="post-meta">
-              <div className="name">{m.name || m.handle}</div>
-              <div className="handle">
-                @{m.handle}
-                {m.created && (
-                  <span> · {new Date(m.created).toLocaleString()}</span>
-                )}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem', marginTop: '0.75rem' }}>
+        {list.map((m) => (
+          <article key={m.id || m.url} className={'post-card'}>
+            <div className={'post-header'}>
+              <div className={'post-avatar'} style={{ background: 'linear-gradient(135deg, #3ee8ff, #ff7a2f)' }}>
+                {(m.name || 'P')[0]}
+              </div>
+              <div className={'post-meta'}>
+                <div className={'name'}>{m.name || 'Pack'}</div>
+                <div className={'handle'}>@{m.handle || 'pack'}</div>
               </div>
             </div>
-          </div>
-          <p className="post-text">{m.text}</p>
-          <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+            <p className={'post-text'}>{m.text}</p>
             {m.url && (
-              <a
-                className="btn btn-ghost"
-                href={m.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ minHeight: 36, fontSize: '0.85rem' }}
-              >
+              <a className={'btn btn-ghost'} style={{ minHeight: 32, fontSize: '0.75rem' }} href={m.url} target={'_blank'} rel={'noopener noreferrer'}>
                 View post
               </a>
             )}
-            <a
-              className="btn btn-cyan"
-              href={`https://twitter.com/intent/tweet?in_reply_to=${m.id}&text=${encodeURIComponent(
-                'Pack up. $CYBERINU'
-              )}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ minHeight: 36, fontSize: '0.85rem' }}
-            >
-              Raid this post
-            </a>
-          </div>
-        </div>
-      ))}
+          </article>
+        ))}
+      </div>
     </div>
   );
 }
