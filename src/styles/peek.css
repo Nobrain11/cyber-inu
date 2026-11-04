@@ -43,3 +43,25 @@ button.stat-chip{cursor:pointer;font-family:inherit;border:1px solid rgba(62,232
 .notice{display:flex;align-items:center;justify-content:space-between;gap:.5rem}
 .notice-dismiss{background:transparent;border:none;color:var(--muted);font-size:1.2rem;line-height:1;padding:.2rem .4rem;min-height:28px;min-width:28px;cursor:pointer;border-radius:8px}
 .notice-dismiss:hover{color:var(--text);background:rgba(255,255,255,.06)}
+.profile-overlay{position:fixed;inset:0;z-index:80;background:rgba(4,2,12,.72);backdrop-filter:blur(8px);display:flex;align-items:flex-end;justify-content:center;padding:0}
+@media (min-width:640px){.profile-overlay{align-items:center;padding:1.5rem}}
+.profile-sheet{width:100%;max-width:420px;max-height:92vh;overflow-y:auto;background:linear-gradient(180deg,#14102a,#0a0618);border:1px solid rgba(62,232,255,.22);border-radius:22px 22px 0 0;position:relative}
+@media (min-width:640px){.profile-sheet{border-radius:22px}}
+.profile-close{position:absolute;top:.65rem;right:.75rem;z-index:2;background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.12);color:var(--text);width:36px;height:36px;border-radius:50%;font-size:1.35rem;line-height:1;cursor:pointer}
+.profile-hero{padding:1.75rem 1.25rem 1.15rem;text-align:center;border-bottom:1px solid rgba(62,232,255,.12)}
+.profile-avatar{width:72px;height:72px;border-radius:50%;margin:0 auto .75rem;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:700;font-size:1.5rem;color:#0a0618;border:3px solid rgba(255,255,255,.35)}
+.profile-name{font-family:var(--font-head);font-size:1.35rem;margin:0 0 .2rem}
+.profile-handle{color:var(--cyan);font-size:.9rem;text-decoration:none}
+.profile-handle:hover{text-decoration:underline}
+.profile-district{margin-top:.45rem;display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--orange);background:rgba(255,122,47,.12);border:1px solid rgba(255,122,47,.3);border-radius:999px;padding:.2rem .6rem}
+.profile-body{padding:1rem 1.15rem 1.5rem}
+.profile-bio{color:var(--muted);line-height:1.55;margin:0 0 1rem;font-size:.92rem}
+.profile-actions{display:flex;gap:.45rem;flex-wrap:wrap}
+.profile-posts{display:flex;flex-direction:column;gap:.55rem}
+.profile-post{background:rgba(255,255,255,.04);border:1px solid rgba(62,232,255,.12);border-radius:14px;padding:.75rem .85rem}
+.profile-post p{margin:0 0 .4rem;font-size:.88rem;line-height:1.45}
+.profile-post-meta{display:flex;gap:.6rem;font-size:.72rem;color:var(--muted)}
+.boosted-tag{color:var(--orange);font-weight:700}
+.pack-model{cursor:pointer}
+.holder-row{cursor:pointer}
+.holder-row:hover{background:rgba(62,232,255,.05)}
