@@ -30,20 +30,19 @@ export default function Feed({ holders, mentions, countdown, navigate }) {
   const [boosts, setBoosts] = useState({});
   const [filter, setFilter] = useState('for-you');
   const [profileId, setProfileId] = useState(null);
+  const [copied, setCopied] = useState(false);
 
   const holderList = holders?.top?.length ? holders.top : SAMPLE_HOLDERS;
   const holdersLive = holders?.fromApi;
-  const mentionsLive = mentions?.fromApi;
-  let noticeText = null;
-  if (holders && mentions) {
-    if (!holdersLive && !mentionsLive) {
-      noticeText = 'Showing sample data. Connect Helius / X API keys for live holders and mentions.';
-    } else if (!mentionsLive) {
-      noticeText = 'Holders are live. Connect X_BEARER_TOKEN for live mentions.';
-    } else if (!holdersLive) {
-      noticeText = 'Mentions are live. Connect HELIUS_API_KEY for live holders.';
-    }
-  }
+  // Never nag about paid X API — only warn if holders fail
+  const noticeText = holders && !holdersLive ? 'Holders temporarily using sample data.' : null;
+
+  const copyCa = () => {
+    navigator.clipboard?.writeText(BRAND.ca).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1600);
+    }).catch(() => {});
+  };
 
   return (
     <div className={'page'}>
@@ -53,13 +52,27 @@ export default function Feed({ holders, mentions, countdown, navigate }) {
         </div>
       )}
 
-      <a className={'community-banner'} href={BRAND.xUrl} target={'_blank'} rel={'noopener noreferrer'}>
-        <div className={'icon'}>X</div>
-        <div>
-          <div className={'title'}>Join the Cyber Inu pack on X</div>
-          <div className={'sub'}>Raids, signals, and lore with the pack.</div>
-        </div>
-      </a>
+      <div className={'cta-stack'}>
+        <a className={'community-banner'} href={BRAND.xUrl} target={'_blank'} rel={'noopener noreferrer'}>
+          <div className={'icon'}>X</div>
+          <div>
+            <div className={'title'}>Follow Cyber Inu on X</div>
+            <div className={'sub'}>Official signals, raids, and pack lore.</div>
+          </div>
+        </a>
+        <a
+          className={'community-banner search'}
+          href={'https://x.com/search?q=%24CYBERINU&src=typed_query&f=live'}
+          target={'_blank'}
+          rel={'noopener noreferrer'}
+        >
+          <div className={'icon search-icon'}>S</div>
+          <div>
+            <div className={'title'}>Live $CYBERINU chatter</div>
+            <div className={'sub'}>Realtime X search — free, no API key.</div>
+          </div>
+        </a>
+      </div>
 
       <div className={'layout-3'}>
         <aside className={'col-side'}>
@@ -79,7 +92,7 @@ export default function Feed({ holders, mentions, countdown, navigate }) {
                   <div className={'holder-avatar'}>{String(i + 1)}</div>
                   <div className={'holder-info'}>
                     <div className={'name'}>{shortWallet(wallet)}</div>
-                    <div className={'sub'}>pack dog · tap for Solscan</div>
+                    <div className={'sub'}>tap for Solscan</div>
                   </div>
                   <span className={'holder-pct'}>
                     {h.pct != null ? Number(h.pct).toFixed(2) + '%' : '-'}
@@ -102,12 +115,12 @@ export default function Feed({ holders, mentions, countdown, navigate }) {
             <div className={'section-label'}>Cyber Inu · the pack that refused to log off</div>
             <h2 className={'section-title'}>WAIT, WHAT IS CYBER INU?</h2>
             <p style={{ margin: 0, color: 'var(--muted)', lineHeight: 1.55 }}>
-              Half-robot Shiba. Full neon prophecy. $CYBERINU is the pack that refused to log off.
-              Community-owned. Raid-ready. Not financial advice. Just the signal.
+              A Shiba that refused to log off. Half flesh, half firmware. The pack rewrites the code
+              instead of following it. Community-owned. Raid-ready. Not financial advice — just the signal.
             </p>
             <div className={'actions'}>
-              <button type={'button'} className={'btn btn-primary'} onClick={() => navigator.clipboard?.writeText(BRAND.ca)}>
-                Copy CA
+              <button type={'button'} className={'btn btn-primary'} onClick={copyCa}>
+                {copied ? 'Copied!' : 'Copy CA'}
               </button>
               <button type={'button'} className={'btn btn-cyan'} onClick={() => navigate('#/raid')}>
                 Raid generator
