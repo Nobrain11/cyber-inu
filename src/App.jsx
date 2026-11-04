@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useHashRoute } from './hooks/useHashRoute';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import BottomNav from './components/BottomNav';
 import Feed from './pages/Feed';
 import Raid from './pages/Raid';
 import Pack from './pages/Pack';
@@ -78,6 +79,7 @@ export default function App() {
         {route === 'ask' && <Ask />}
       </main>
       <Footer />
+      <BottomNav route={route} navigate={navigate} />
     </>
   );
 }
