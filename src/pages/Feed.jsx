@@ -3,6 +3,7 @@ import { BRAND, SAMPLE_MENTIONS, SAMPLE_HOLDERS } from '../config';
 import { PACK, FEED_POSTS } from '../data';
 import { useLocalPack } from '../hooks/useLocalPack';
 import Skyline from '../components/Skyline';
+import ProfileModal from '../components/ProfileModal';
 
 function avatarColor(id) {
   const p = PACK.find((x) => x.id === id);
@@ -28,9 +29,9 @@ export default function Feed({ holders, mentions, countdown, navigate }) {
   const [likes, setLikes] = useState({});
   const [boosts, setBoosts] = useState({});
   const [filter, setFilter] = useState('for-you');
+  const [profileId, setProfileId] = useState(null);
 
   const holderList = holders?.top?.length ? holders.top : SAMPLE_HOLDERS;
-  const mentionList = Array.isArray(mentions) && mentions.length ? mentions : SAMPLE_MENTIONS;
   const holdersLive = holders?.fromApi;
   const mentionsLive = mentions?.fromApi;
   let noticeText = null;
@@ -68,12 +69,17 @@ export default function Feed({ holders, mentions, countdown, navigate }) {
             {holderList.slice(0, 10).map((h, i) => {
               const wallet = h.wallet || h.owner || '';
               return (
-                <div className={'holder-row'} key={wallet || i}>
+                <div
+                  className={'holder-row'}
+                  key={wallet || i}
+                  onClick={() => wallet && window.open('https://solscan.io/account/' + wallet, '_blank')}
+                  role={'link'}
+                >
                   <span className={'holder-rank'}>{i + 1}</span>
                   <div className={'holder-avatar'}>{String(i + 1)}</div>
                   <div className={'holder-info'}>
                     <div className={'name'}>{shortWallet(wallet)}</div>
-                    <div className={'sub'}>pack dog</div>
+                    <div className={'sub'}>pack dog · tap for Solscan</div>
                   </div>
                   <span className={'holder-pct'}>
                     {h.pct != null ? Number(h.pct).toFixed(2) + '%' : '-'}
@@ -117,7 +123,14 @@ export default function Feed({ holders, mentions, countdown, navigate }) {
             <h2 className={'section-title'}>The pack</h2>
             <div className={'pack-grid-peek'}>
               {PACK.map((p) => (
-                <div key={p.id} className={'pack-model'}>
+                <div
+                  key={p.id}
+                  className={'pack-model'}
+                  onClick={() => setProfileId(p.id)}
+                  role={'button'}
+                  tabIndex={0}
+                  onKeyDown={(e) => e.key === 'Enter' && setProfileId(p.id)}
+                >
                   <div className={'cover'}>
                     <div className={'cover-avatar'} style={{ background: p.colors.primary }}>
                       {initials(p.name)}
@@ -133,7 +146,7 @@ export default function Feed({ holders, mentions, countdown, navigate }) {
                       type={'button'}
                       className={'btn btn-ghost'}
                       style={{ width: '100%', minHeight: 32, fontSize: '0.75rem' }}
-                      onClick={() => toggle(p.id)}
+                      onClick={(e) => { e.stopPropagation(); toggle(p.id); }}
                     >
                       {isJoined(p.id) ? 'Joined' : 'Join pack'}
                     </button>
@@ -164,7 +177,11 @@ export default function Feed({ holders, mentions, countdown, navigate }) {
             const author = packMember(post.authorId);
             return (
               <article key={post.id} className={'post-card'}>
-                <div className={'post-header'}>
+                <div
+                  className={'post-header'}
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => setProfileId(post.authorId)}
+                >
                   <div className={'post-avatar'} style={{ background: avatarColor(post.authorId) }}>
                     {initials(author.name)}
                   </div>
@@ -231,6 +248,8 @@ export default function Feed({ holders, mentions, countdown, navigate }) {
           </div>
         </aside>
       </div>
+
+      {profileId && <ProfileModal memberId={profileId} onClose={() => setProfileId(null)} />}
     </div>
   );
 }
