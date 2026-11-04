@@ -15,9 +15,13 @@ button.stat-chip{cursor:pointer;font-family:inherit;border:1px solid rgba(62,232
 .stat-chip .v{font-family:var(--font-head);font-weight:600;color:var(--cyan);font-size:.82rem}
 .stat-chip .v.pos{color:#34d399}
 .stat-chip .v.neg{color:#f87171}
-.community-banner{display:flex;align-items:center;gap:.85rem;background:linear-gradient(135deg,rgba(62,232,255,.12),rgba(255,122,47,.08));border:1px solid rgba(62,232,255,.35);border-radius:16px;padding:.9rem 1rem;text-decoration:none;color:inherit;margin-bottom:.75rem}
+.community-banner{display:flex;align-items:center;gap:.85rem;background:linear-gradient(135deg,rgba(62,232,255,.12),rgba(255,122,47,.08));border:1px solid rgba(62,232,255,.35);border-radius:16px;padding:.9rem 1rem;text-decoration:none;color:inherit;margin-bottom:0}
+.cta-stack{display:flex;flex-direction:column;gap:.55rem;margin-bottom:.75rem}
 .community-banner:hover{border-color:var(--cyan);box-shadow:0 0 24px rgba(62,232,255,.15);text-decoration:none}
+.community-banner.search{border-color:rgba(255,122,47,.35);background:linear-gradient(135deg,rgba(255,122,47,.1),rgba(62,232,255,.06))}
+.community-banner.search:hover{border-color:var(--orange);box-shadow:0 0 20px rgba(255,122,47,.15)}
 .community-banner .icon{width:40px;height:40px;border-radius:50%;background:#1da1f2;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;color:#fff;font-size:1.1rem}
+.community-banner .icon.search-icon{background:linear-gradient(135deg,var(--orange),#ff9a5a);font-size:1rem}
 .community-banner .title{font-family:var(--font-head);font-weight:700;font-size:.95rem;letter-spacing:.03em;text-transform:uppercase;color:var(--text)}
 .community-banner .sub{font-size:.8rem;color:var(--muted);margin-top:.1rem}
 .lore-card .section-title{font-size:1.35rem;text-transform:uppercase;letter-spacing:.02em}
